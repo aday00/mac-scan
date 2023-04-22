@@ -1,0 +1,9 @@
+Problem: DHCP occasionally changes the IP address of a device to reach.  Changes in IP address makes it difficult to consistently reach the device over time in an automated way.
+
+Solution: Record the device's MAC address, to at any time look up the IP address for the device to reach.  The device is then identifiable by MAC, so its IP address may be consistently looked up and reached, as the IP address changes through DHCP.
+
+Caveats: This approach requires Linux tools nmap and arp.  The server which runs these programs must be on the same subnet as the device to reach, e.g. both server and device have IP addresses "192.168.1.*", where * is some number between 1 and 255.  If the server and device are instead on "10.0.1.*" subnets (or some other subnet), edit mac-scan.c to make the appropriate change.
+
+Setup: Install nmap, arp, and gcc.  Run ./mac-scan.compile.sh, which produces then mac-scan binary that is setuid for nmap to scan for devices correctly.
+
+Usage (to look up an IP address for the specified MAC address): ./mac-scan.mac-to-ip.sh <MAC-address-of-device>
